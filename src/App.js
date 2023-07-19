@@ -20,7 +20,7 @@ function App() {
   return (
     <div className="wrapper">
       <SearchContext.Provider value={{ searchValue, setSearchValue }}>
-        <Header/>
+        <Header />
         <div className="content">
           <Routes>
             <Route path={'/'} element={<Home searchValue={searchValue} />} />
