@@ -1,19 +1,23 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import qs from 'qs';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
-import { fetchPizzas } from '../redux/slices/pizzaSlice';
+import {
+  selectFilter,
+  setCategoryId,
+  setCurrentPage,
+  setFilters,
+} from '../redux/slices/filterSlice';
+import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 
 import { Categories } from '../components/Categories';
 import { Sort, sortList } from '../components/Sort';
 import { Skeleton } from '../components/PizzaBlock/Skeleton';
 import { PizzaBlock } from '../components/PizzaBlock/PizzaBlock';
 import { Pagination } from '../components/Pagination/Pagination';
-import { SearchContext } from '../App';
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -22,10 +26,8 @@ export const Home = () => {
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  const { items, status } = useSelector(state => state.pizza);
-  const { categoryId, sort, currentPage } = useSelector(state => state.filter);
-
-  const { searchValue } = useContext(SearchContext);
+  const { items, status } = useSelector(selectPizzaData);
+  const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
 
   const onChangeCategory = idx => {
     dispatch(setCategoryId(idx));
