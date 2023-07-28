@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -19,7 +20,7 @@ import { Skeleton } from '../components/PizzaBlock/Skeleton';
 import { PizzaBlock } from '../components/PizzaBlock/PizzaBlock';
 import { Pagination } from '../components/Pagination/Pagination';
 
-export const Home = () => {
+export const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -29,11 +30,11 @@ export const Home = () => {
   const { items, status } = useSelector(selectPizzaData);
   const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
 
-  const onChangeCategory = idx => {
+  const onChangeCategory = (idx: number) => {
     dispatch(setCategoryId(idx));
   };
 
-  const onChangePage = page => {
+  const onChangePage = (page: number) => {
     dispatch(setCurrentPage(page));
   };
 
@@ -44,6 +45,7 @@ export const Home = () => {
     const search = searchValue ? `&search=${searchValue}` : '';
 
     dispatch(
+      // @ts-ignore
       fetchPizzas({
         sortBy: sortBy,
         order: order,
@@ -98,7 +100,7 @@ export const Home = () => {
     isSearch.current = false;
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
-  const pizzas = items.map(obj => (
+  const pizzas = items.map((obj: any) => (
     <Link to={`/pizza/${obj.id}`} key={obj.id}>
       <PizzaBlock {...obj} />
     </Link>
@@ -115,7 +117,7 @@ export const Home = () => {
       {status === 'error' ? (
         <div className={'content__error-info'}>
           <h2>
-            Произошла ошибка <icon>😕</icon>
+            Произошла ошибка <span>😕</span>
           </h2>
           <p>К сожалению не удалось получить питcы. Попробуйте повторить попытку позже.</p>
         </div>
