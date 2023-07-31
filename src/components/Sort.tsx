@@ -4,6 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectSort, setSort } from '../redux/slices/filterSlice';
 
 type SortItem = { name: string; sortProperty: string };
+
+type PopupClick = MouseEvent & {
+  path: Node[];
+};
+
 export const sortList: SortItem[] = [
   { name: 'популярности (DESC)', sortProperty: 'rating' },
   { name: 'популярности (ASC)', sortProperty: '-rating' },
@@ -18,7 +23,7 @@ export const Sort: React.FC = () => {
   const sort = useSelector(selectSort);
   const sortRef = useRef<HTMLDivElement>(null);
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   const onClickListItem = (obj: SortItem) => {
     dispatch(setSort(obj));
@@ -27,8 +32,10 @@ export const Sort: React.FC = () => {
 
   // Клик вне поля сортировки (не работает если стоит path, нужно менять на composedPath() )
   useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      if (!event.composedPath().includes(sortRef.current)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      const _event = event as PopupClick;
+
+      if (sortRef.current && !_event.path.includes(sortRef.current)) {
         setOpen(false);
       }
     };
