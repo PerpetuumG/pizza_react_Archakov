@@ -1,17 +1,13 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import {
-  selectSort,
-  setSort,
-  Sort as SortType,
-  SortPropertyEnum,
-} from '../redux/slices/filterSlice';
+import { setSort, Sort as SortType, SortPropertyEnum } from '../redux/slices/filterSlice';
 
 type SortItem = { name: string; sortProperty: SortPropertyEnum };
 
+// path: Node[] заменили на composedPath(). Возможно нет необходимости в этом блоке совсем
 type PopupClick = MouseEvent & {
-  path: Node[];
+  composedPath(): Node[];
 };
 
 type SortPopupProps = {
@@ -43,7 +39,7 @@ export const Sort: React.FC<SortPopupProps> = memo(({ value }) => {
     const handleClickOutside = (event: MouseEvent) => {
       const _event = event as PopupClick;
 
-      if (sortRef.current && !_event.path.includes(sortRef.current)) {
+      if (sortRef.current && !_event.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }
     };
