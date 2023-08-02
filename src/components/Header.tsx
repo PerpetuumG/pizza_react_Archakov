@@ -30,7 +30,7 @@ export const Header: React.FC = () => {
         </Link>
 
         {/* Search */}
-        <Search />
+        {location.pathname !== '/cart' && <Search />}
 
         <div className="header__cart">
           {/* button Cart */}
