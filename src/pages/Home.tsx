@@ -2,23 +2,22 @@ import React, { useCallback } from 'react';
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import qs from 'qs';
-
-import { useSelector } from 'react-redux';
-
-import { Categories } from '../components/Categories';
-import { Sort, sortList } from '../components/Sort';
-import { Skeleton } from '../components/PizzaBlock/Skeleton';
-import { PizzaBlock } from '../components/PizzaBlock/PizzaBlock';
-import { Pagination } from '../components/Pagination/Pagination';
 import { useAppDispatch } from '../redux/store';
 import { selectPizzaData } from '../redux/pizza/selectors';
 import { selectFilter } from '../redux/filter/selectors';
-import { setCategoryId, setCurrentPage, setFilters } from '../redux/filter/slice';
 import { fetchPizzas } from '../redux/pizza/asincActions';
 import { SearchPizzaParams } from '../redux/pizza/types';
+import { setCategoryId, setCurrentPage, setFilters } from '../redux/filter/slice';
 
-export const Home: React.FC = () => {
+import { useSelector } from 'react-redux';
+
+import qs from 'qs';
+
+import { sortList } from '../components/Sort';
+
+import { Skeleton, PizzaBlock, Categories, Pagination, Sort } from '../components';
+
+const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -129,3 +128,4 @@ export const Home: React.FC = () => {
     </div>
   );
 };
+export default Home;
